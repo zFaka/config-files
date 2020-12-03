@@ -109,7 +109,7 @@ nnoremap m A;<Esc><CR>i
 
 "Automatically closing braces
 inoremap {<CR> {<CR>}<Esc>ko<tab>
-inoremap <Char-61><Char-62><Space>{ {<CR>}<Esc>ko<tab>
+inoremap <Char-62><Space>{ <Char-62><Space>{<CR>}<Esc>ko<tab>
 inoremap [ [<CR>]<Esc>ko<tab>
 inoremap ( (<CR>)<Esc>ko<tab>
 
