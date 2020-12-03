@@ -126,6 +126,7 @@ inoremap " ""<Esc>i
 
 "# Git"
 nnoremap <Leader>G :G<CR>
+nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>ga :Git add .<CR>
 nnoremap <Leader>gc :Gcommit -m ""<left>
 nnoremap <Leader>gp :Gpush -u origin master<CR>
