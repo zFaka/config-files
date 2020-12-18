@@ -1,38 +1,40 @@
-set pastetoggle=<F5>
-set noswapfile
-set autoindent
-set smartindent
-set smartcase
-set tabstop=4 
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set nowrap
-set undodir=~/.vim/undodir
-set undofile
-set incsearch
-set bg=light
-set hidden
-set nobackup
-set nowritebackup
-
+set pastetoggle=<F5> " ----- Enable/Disable autoformating asfter paste"
+set noequalalways " -------- THis prevent NERDTree resize terminal"
+set noswapfile " ----------- Dont make a swap file"
+set autoindent " ----------- Indent a line spaces"
+set smartindent " ---------- Indent reacting to syntax"
+set smartcase " ------------ Case-Insensitive search"
+set softtabstop=4 " -------- Default tab stop size"
+set tabstop=4 " ------------ Width of tabs"
+set shiftwidth=4 " --------- Width of shift"
+set expandtab " ------------ Use spaces instead tab"
+set nowrap " --------------- Display just one line instead of various lines"
+set undodir=~/.vim/undodir " Dir to your Logs modifications"
+set undofile " ------------- Create a file to store your log modifications"
+set incsearch " ------------ Highlight matches as you type"
+set hidden " --------------- Handle multiple buffers better."
+set nobackup " ------------- Dont make backup before overwriting a file"
+set nowritebackup " -------- And again"
+set splitright
+set splitbelow
+" in TERMINAL open new split panes to right and below
+set splitright
+set splitbelow
+" Languages Highlighting
+set nocompatible
+set encoding=utf-8
 " Enable theming support
 if (has("termguicolors"))
     set termguicolors
 endif
 
-" Terminal
-" open new split panes to right and below
-set splitright
-set splitbelow
-
-" Languages Highlighting
-set nocompatible
-set encoding=utf-8
-
-filetype plugin on
-
 call plug#begin("~/.vim/plugged")
+
+"terminalsplitting"
+Plug 'vimlab/split-term.vim'
+
+"FIle tree"
+Plug 'preservim/nerdtree'
 
 " Commenter
 Plug 'preservim/nerdcommenter'
@@ -42,13 +44,14 @@ Plug 'sainnhe/gruvbox-material'
 
 " Barra de estado
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Git
 Plug 'tpope/vim-fugitive'
 
 " Language Client
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
+
 " TypeScript Highlighting
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
@@ -60,31 +63,105 @@ Plug 'junegunn/fzf.vim'
 " Languages Highlighting
 Plug 'sheerun/vim-polyglot'
 
+"Plug 'pangloss/vim-javascript'
 "Plug 'leafgarland/typescript-vim'
 "Plug 'peitalin/vim-jsx-typescript'
+"Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+"Plug 'jparise/vim-graphql'
 
 call plug#end()
 
+"""""""""""""""""""""""""""""""""""""""""
+"########################################
+"############### CONFIG #################
+"########################################
+"""""""""""""""""""""""""""""""""""""""""
+"Coc extensions"
+let g:coc_global_extensions = [
+            \ 'coc-actions',
+            \ 'coc-html', 
+            \ 'coc-css', 
+            \ 'coc-tsserver',
+            \ 'coc-vimlsp',
+            \ 'coc-sql',
+            \ 'coc-tabnine',
+            \ 'coc-snippets',
+            \ 'coc-json',
+            \ 'coc-jest', 
+            \ 'coc-yaml',
+            \ 'coc-eslint', 
+            \ 'coc-prettier',
+            \ 'coc-tslint',
+            \ 'coc-explorer',
+            \ 'coc-git',
+            \ 'coc-marketplace']
+
+"Config Background color basedoff the time"
+"Change theme depending on the time of day dark/light
+let hr = (strftime('%H'))
+if hr >= 20
+    set background=dark
+    let g:gruvbox_material_transparent_background = 0
+    let g:gruvbox_material_background = 'hard'
+elseif hr >= 19
+    set background=dark
+    let g:gruvbox_material_transparent_background = 0
+    let g:gruvbox_material_background = 'medium'
+elseif hr >= 6
+    set background=dark
+    let g:gruvbox_material_transparent_background = 0
+    let g:gruvbox_material_background = 'soft'
+endif
+
+filetype plugin on
+
+"theme"
+let g:airline_theme='papercolor'
+
 " Theme
 syntax enable
-let g:gruvbox_material_background = 'soft'
-let g:airline_theme = 'gruvbox_material'
-let g:gruvbox_material_transparent_background = 1
 colorscheme gruvbox-material
 
 " start terminal in insert mode
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
-" open terminal on ctrl+;
+" open terminal on ctrl+n;
 " uses zsh instead of bash
 function! OpenTerminal()
-    split term://zsh
-    resize 10
+    vsplit term://zsh
+    vertical resize 50
 endfunction
 nnoremap <c-n> :call OpenTerminal()<CR>
+nnoremap <c-x> :19Term<CR>
+"split term:zsh"
+""resize 13
+
+""To simulate i_CTRL-R in terminal-mode:
+:tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+""To use ALT+{h,j,k,l} to navigate windows from any mode:
+:tnoremap <A-h> <C-\><C-N><C-w>h
+:tnoremap <A-j> <C-\><C-N><C-w>j
+:tnoremap <A-k> <C-\><C-N><C-w>k
+:tnoremap <A-l> <C-\><C-N><C-w>l
+:inoremap <A-h> <C-\><C-N><C-w>h
+:inoremap <A-j> <C-\><C-N><C-w>j
+:inoremap <A-k> <C-\><C-N><C-w>k
+:inoremap <A-l> <C-\><C-N><C-w>l
+:nnoremap <A-h> <C-w>h
+:nnoremap <A-j> <C-w>j
+:nnoremap <A-k> <C-w>k
+:nnoremap <A-l> <C-w>l
+
+""NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let NERDTreeQuitOnOpen=1
 
 """"""""""""""""""""""""""""""""""""""""
+"######################################"
 "############# KEYMAPING ###############
+"######################################"
 """"""""""""""""""""""""""""""""""""""""
 " Set Leader
 let mapleader = " "
@@ -105,13 +182,49 @@ map <F2> gg=G<C-o><C-o>
 inoremap jj <ESC>
 
 " Put a semiclon at the end of the line"
-nnoremap m A;<Esc><CR>i
+nnoremap mm A;<Esc>
+
+" resize term"
+nnoremap <C-=> :vertical res +17<CR>
+
+"Keep wrinting after script on bracket";
+inoremap kk <Esc>la
+
+"# React Shortcut"
+nnoremap cr iimport React from 'react';<CR>
+            \<CR><Esc>
+            \iconst <Char-127> = (<Char-127>) => {<CR>return (<CR>)}<Esc>ko<tab><><CR></><Esc>ko<tab><Char-127><Esc><S-G>A<CR><CR>
+            \export default <Char-127>;<Esc>/<Char-127><CR>ciw
+
+            "\import PropTypes from 'prop-types';<CR>
+            "\<Char-127>.propTypes = {<CR>}<Esc>ko<tab><Char-127><Esc>ja<CR>
+
+"arrow function"
+inoremap ff const <Char-127> (<Char-127>) => {<CR>}<Esc>ko<tab><Char-127><Esc>/<Char-127><CR>ciw
+
+"hald arrow"
+inoremap >> () => {<CR><CR><CR><CR>}<Esc>kki<tab>
+
+"const "
+inoremap cc const <Char-127> = <Char-127>;<Esc>/<Char-127><CR>ciw
+
+"change inside word"
+nnoremap q xi
+
+"Import"
+inoremap ipf import <Char-127> from '<Char-127>';<Esc>/<Char-127><CR>ciw
+inoremap ips import <Char-127> ;<Esc>/<Char-127><CR>ciw
+
+" ${}"
+inoremap <Char-36> <Char-36>{}<Esc>i
+
+"Jump to line number"
+nnoremap <CR> G
 
 "Automatically closing braces
-inoremap {<CR> {<CR>}<Esc>ko<tab>
-inoremap <Char-62><Space>{ <Char-62><Space>{<CR>}<Esc>ko<tab>
-inoremap [ [<CR>]<Esc>ko<tab>
-inoremap ( (<CR>)<Esc>ko<tab>
+inoremap { {<CR><CR><CR>}<Esc>kko<tab>
+inoremap [ [<CR><CR><CR>]<Esc>kko<tab>
+inoremap ( (<CR><CR><CR>)<Esc>kko<tab>
 
 "Normal brackets
 inoremap ) ()<Esc>i
@@ -120,12 +233,11 @@ inoremap } {}<Esc>i
 
 "Automatically close comillas
 inoremap ` ``<Esc>i
-inoremap <Char-36> <Char-36>{}<Esc>i
 inoremap ' ''<Esc>i
 inoremap " ""<Esc>i
 
 "# Git"
-nnoremap <Leader>G :G<CR>
+nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>ga :Git add .<CR>
 nnoremap <Leader>gc :Gcommit -m ""<left>
@@ -138,6 +250,12 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-impementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>do <Plug>(coc-codeaction)
+
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 "Completion with Enter"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -158,4 +276,10 @@ endfunction
 nnoremap <C-p> :FZF<CR>
 
 " turn terminal to normal mode with escape
-tnoremap <Esc> <C-\><C-n>
+"tnoremap <Esc> <C-\><C-n>
+tnoremap jj <C-\><C-n>
+
+"NERDTreeToggle"
+nmap <F3> :NERDTreeToggle<CR>
+
+
