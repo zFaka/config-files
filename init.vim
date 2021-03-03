@@ -176,7 +176,7 @@ nnoremap <Leader>q :q<CR>
 inoremap , ,<space>
 
 " Autoindent"
-map <F2> gg=G<C-o><C-o>
+map ff gg=G<C-o><C-o>
 
 " Escape"
 inoremap jj <ESC>
@@ -191,19 +191,19 @@ nnoremap <C-=> :vertical res +17<CR>
 inoremap kk <Esc>la
 
 "# React Shortcut"
-nnoremap cr iimport React from 'react';<CR>
+nnoremap tr iimport React from 'react';<CR>
             \<CR><Esc>
-            \iconst <Char-127> = (<Char-127>) => {<CR>return (<CR>)}<Esc>ko<tab><><CR></><Esc>ko<tab><Char-127><Esc><S-G>A<CR><CR>
-            \export default <Char-127>;<Esc>/<Char-127><CR>ciw
+            \iexport const <Char-127> = (<Char-127>) => {<CR>return (<CR>)}<Esc>ko<tab><><CR></><Esc>ko<tab><Char-127><Esc>
+            \/<Char-127><CR>ciw
+"\import PropTypes from 'prop-types';<CR>
+"\<Char-127>.propTypes = {<CR>}<Esc>ko<tab><Char-127><Esc>ja<CR>
 
-            "\import PropTypes from 'prop-types';<CR>
-            "\<Char-127>.propTypes = {<CR>}<Esc>ko<tab><Char-127><Esc>ja<CR>
-
-"arrow function"
-inoremap ff const <Char-127> (<Char-127>) => {<CR>}<Esc>ko<tab><Char-127><Esc>/<Char-127><CR>ciw
-
-"hald arrow"
-inoremap >> () => {<CR><CR><CR><CR>}<Esc>kki<tab>
+"# React Shortcut"
+nnoremap tt idescribe(' <Char-127> ', () => {<CR><CR><CR>}<Esc>ko<tab>
+            \test('<Char-127>', () => {<CR>}<ESC>ko<CR><CR><Char-127><Esc>
+            \/<Char-127><CR>ciw
+"half arrow callback"
+inoremap >> () => {<CR><CR>}<Esc>ko<tab>
 
 "const "
 inoremap cc const <Char-127> = <Char-127>;<Esc>/<Char-127><CR>ciw
@@ -216,15 +216,15 @@ inoremap ipf import <Char-127> from '<Char-127>';<Esc>/<Char-127><CR>ciw
 inoremap ips import <Char-127> ;<Esc>/<Char-127><CR>ciw
 
 " ${}"
-inoremap <Char-36> <Char-36>{}<Esc>i
+inoremap <Char-36><Char-36> <Char-36>{}<Esc>i
 
 "Jump to line number"
 nnoremap <CR> G
 
 "Automatically closing braces
-inoremap { {<CR><CR><CR>}<Esc>kko<tab>
-inoremap [ [<CR><CR><CR>]<Esc>kko<tab>
-inoremap ( (<CR><CR><CR>)<Esc>kko<tab>
+inoremap { {<CR>}<Esc>ko<tab>
+inoremap [ [<CR>]<Esc>ko<tab>
+inoremap ( (<CR>)<Esc>ko<tab>
 
 "Normal brackets
 inoremap ) ()<Esc>i
@@ -241,7 +241,7 @@ nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>ga :Git add .<CR>
 nnoremap <Leader>gc :Gcommit -m ""<left>
-nnoremap <Leader>gp :Gpush -u origin master<CR>
+nnoremap <Leader>gp :Gpush<CR>
 nnoremap <Leader>gl :Gpull
 
 "# coc.nvim"
@@ -280,6 +280,4 @@ nnoremap <C-p> :FZF<CR>
 tnoremap jj <C-\><C-n>
 
 "NERDTreeToggle"
-nmap <F3> :NERDTreeToggle<CR>
-
-
+nmap fe :NERDTreeToggle<CR>
